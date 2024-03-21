@@ -314,22 +314,74 @@
 
     <script>
 
-        let display = document.getElementById("display");
-        let displayValue = display.value; 
+        //Display
+            let display = document.getElementById("display");
+            let displayOldValue = display.value;
+            
+        //Reset Btn
+            let btnReset = document.getElementById("btnReset");
+            btnReset.addEventListener("click", () => {
+                    display.value= "0";
+                    console.log("successfully erased");
+                });
 
-        let btnReset = document.getElementById("btnReset");
-        btnReset.addEventListener("click", () => {
-                display.value= "0";
-                displayValue = display.value;
-                console.log("successfully erased");
-            });
+        //Input Function
+            let inputFunction = (element, event, btnValue, shownValue) => {
+                element.addEventListener(event, () => {
+                    //Display Value
+                        let displayValue = shownValue.value;
 
+                    //Not taking left 0 into account
+                        if (displayValue=="0") {
+                            displayValue="";
+                        }
+                    //concatenate btnValue to displayValue 
+                        displayValue += btnValue;
+                        shownValue.value = displayValue;
+                        console.log(displayValue);
+                } )
+            }
+
+        //Restriction to only number characters function for display
+            display.addEventListener("keyup", () => {
+                //regex for numbers/operations
+                const numberRegex = /[-+*/.]|\d+|\d*\.\d+/g;
+                //check if condition is matched
+                for (const letter of display.value) {
+                    let isOnlyNumber = letter.match(numberRegex);
+                    if (!isOnlyNumber) {
+                        display.value=displayOldValue;
+                    }
+                }
+            })
+            
+
+        //Number Btns
         let btn9 = document.getElementById("btn9");
-        btn9.addEventListener("click", () => {
-                display.value = displayValue + "9";
-                displayValue = display.value; 
-                console.log(displayValue);
-            });
+        let btn8 = document.getElementById("btn8");
+        let btn7 = document.getElementById("btn7");
+        let btn6 = document.getElementById("btn6");
+        let btn5 = document.getElementById("btn5");
+        let btn4 = document.getElementById("btn4");
+        let btn3 = document.getElementById("btn3");
+        let btn2 = document.getElementById("btn2");
+        let btn1 = document.getElementById("btn1");
+        let btn0 = document.getElementById("btn0");
+        let btnDot = document.getElementById("btnDot");
+        
+        inputFunction(btn9, "click", "9", display);
+        inputFunction(btn8, "click", "8", display);
+        inputFunction(btn7, "click", "7", display);
+        inputFunction(btn6, "click", "6", display);
+        inputFunction(btn5, "click", "5", display);
+        inputFunction(btn4, "click", "4", display);
+        inputFunction(btn3, "click", "3", display);
+        inputFunction(btn2, "click", "2", display);
+        inputFunction(btn1, "click", "1", display);
+        inputFunction(btn0, "click", "0", display);
+        inputFunction(btnDot, "click", ".", display);
+
+        //Operation Btns
 
 
     </script>
