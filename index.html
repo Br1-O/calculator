@@ -340,54 +340,38 @@
             let btnChangeSign = document.getElementById("btn+-");
             btnChangeSign.addEventListener("click", () => {
                 //get display value
-                let displayOriginalValue = display.value;
-                //regex for ONLY numbers
-                const numberRegex = /[-.]|\d+|\d*\.\d+/g;
+                    let displayOriginalValue = display.value;
 
-                let isOnlyNumber;
+                //Not taking 0 into account
+                    if (displayOriginalValue=="0" || displayOriginalValue==".") {
+                        display.value=displayOriginalValue;
+                    }else{
+                        //regex for ONLY numbers
+                            const numberRegex = /[-.]|\d+|\d*\.\d+/g;
+                        let isOnlyNumber;
 
-                for (const char of displayOriginalValue) {
-                    //Refresh the last index so the iteration starts the test() always at index 0
-                        numberRegex.lastIndex = 0;
-                    //check if is only numbers in the display
-                        isOnlyNumber = numberRegex.test(char);
-                    //if not, break loop so isOnlyNumber remains false
-                    if (!isOnlyNumber) {
-                        break;
-                    }
-                }
-
-                //if they are only numbers, change/remove the sign
-                    if(isOnlyNumber){
-                        if(displayOriginalValue.charAt(0) !== "-"){
-                            display.value= "-" + displayOriginalValue;
-                        }else{
-                            display.value= displayOriginalValue.substr(1, displayOriginalValue.length);
+                        for (const char of displayOriginalValue) {
+                            //Refresh the last index so the iteration starts the test() always at index 0
+                                numberRegex.lastIndex = 0;
+                            //check if is only numbers in the display
+                                isOnlyNumber = numberRegex.test(char);
+                            //if not, break loop so isOnlyNumber remains false
+                            if (!isOnlyNumber) {
+                                break;
+                            }
                         }
+                        
+                        //if they are only numbers, change/remove the sign
+                            if(isOnlyNumber){
+                                if(displayOriginalValue.charAt(0) !== "-"){
+                                    display.value= "-" + displayOriginalValue;
+                                }else{
+                                    display.value= displayOriginalValue.substr(1, displayOriginalValue.length);
+                                }
+                            }
                     }
-            })
+            });
 
-
-
-        //Input Function
-            let inputFunction = (element, event, btnValue, shownValue) => {
-                element.addEventListener(event, () => {
-                    //Display Value
-                        let displayValue = shownValue.value;
-                    //Not taking left 0 into account
-                        if (displayValue=="0") {
-                            displayValue="";
-                        }
-                    //concatenate btnValue to displayValue 
-                        displayValue += btnValue;
-                        shownValue.value = displayValue;
-
-                    //Take off Focus on Element
-                        setTimeout(() => {
-                            element.blur();
-                        }, 150);
-                } )
-            }
 
         //Restriction to only number characters function for display
             display.addEventListener("keydown", () => {
@@ -406,6 +390,26 @@
                         display.value=displayOriginalValue;
                     }
             });
+
+        //Input Function
+            let inputFunction = (element, event, btnValue, shownValue) => {
+                element.addEventListener(event, () => {
+                    //Display Value
+                        let displayValue = shownValue.value;
+                    //Not taking left 0 into account
+                        if (displayValue=="0") {
+                            displayValue="";
+                        }
+                    //concatenate btnValue to displayValue 
+                        displayValue += btnValue;
+                        shownValue.value = displayValue;
+
+                    //Take off Focus on Element
+                        setTimeout(() => {
+                            element.blur();
+                        }, 150);
+                });
+            }
             
 
         //Number Btns
@@ -420,7 +424,8 @@
             let btn1 = document.getElementById("btn1");
             let btn0 = document.getElementById("btn0");
             let btnDot = document.getElementById("btnDot");
-            
+        
+        //Number input functions assignation
             inputFunction(btn9, "click", "9", display);
             inputFunction(btn8, "click", "8", display);
             inputFunction(btn7, "click", "7", display);
@@ -447,12 +452,39 @@
             let btnEqual = document.getElementById("btnEqual");
 
         //Operation functions
-            btnAdd.addEventListener("click", () => {
-                let value1 = display.value;
-                display.value += "+";
+            //Single value operations
+                //Square
+                    btnSquare.addEventListener("click", () => {
+                        let value = parseFloat(display.value);
+                        let result = value*value;
+                        display.value=result;
+                    });
+                //Cube
+                    btnCube.addEventListener("click", () => {
+                            let value = parseFloat(display.value);
+                            let result = value*value*value;
+                            display.value=result;
+                        });
+                //Square root
+                    btnSqRoot.addEventListener("click", () => {
+                        let value = parseFloat(display.value);
+                        let result = Math.sqrt(value);
+                        console.log(isNaN(result));
+                        isNaN(result) ? display.value = "Entrada no válida" : display.value=result;
+                        setTimeout(() => {
+                            display.value = "0";
+                        }, 800);
+                    });
+            
+            //multiple value operations
+                //Adding function
+                    btnAdd.addEventListener("click", () => {
+                        let value1 = display.value;
+                        display.value += "+";
 
 
-            })
+                    })
+            
             
 
 
