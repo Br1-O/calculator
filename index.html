@@ -409,6 +409,14 @@
         //Display
             let display = document.getElementById("display");
             let operationsDisplay = document.getElementById("secondaryDisplay");
+
+        //function to take off focus from element
+            let undoFocus = (btn) => {
+                //Take off Focus on Element
+                    setTimeout(() => {
+                        btn.blur();
+                    }, 150);
+            }
             
         //Reset Btn
             let btnReset = document.getElementById("btnReset");
@@ -425,12 +433,18 @@
                     let displayOriginalValue = display.value;
                 //create substring with last char deleted 
                     let valueWLastCharDeleted = displayOriginalValue.substr(0, displayOriginalValue.length-1);
-                //update display value
+                //check if all digits where deleted
+                if (valueWLastCharDeleted.length!==0) {
+                    //update display value
                     display.value = valueWLastCharDeleted;
+                } else {
+                    //update display value to zero is no digit remains
+                    display.value = 0;
+                }
+
             });
 
         //Change Sign Btn
-
             let btnChangeSign = document.getElementById("btn+-");
             btnChangeSign.addEventListener("click", () => {
                 //get display value
@@ -464,6 +478,8 @@
                                 }
                             }
                     }
+                //Take off Focus on Element
+                    undoFocus(btnChangeSign);
             });
 
 
@@ -499,9 +515,7 @@
                         shownValue.value = displayValue;
 
                     //Take off Focus on Element
-                        setTimeout(() => {
-                            element.blur();
-                        }, 150);
+                        undoFocus(element);
                 });
             }
             
@@ -530,7 +544,21 @@
             inputFunction(btn2, "click", "2", display);
             inputFunction(btn1, "click", "1", display);
             inputFunction(btn0, "click", "0", display);
-            inputFunction(btnDot, "click", ".", display);
+
+        //Input Function for dot button
+            btnDot.addEventListener("click", () => {
+                //check if there is not already 1 dot in display value
+                if (!((display.value).includes("."))) {
+                    //Display Value
+                        let displayValue = display.value;
+                    //concatenate btnValue to displayValue 
+                        displayValue += ".";
+                        display.value = displayValue;
+                }
+                //Take off Focus on Element
+                    undoFocus(btnDot);
+            });
+
 
         //Operation Btns
             let btnAdd = document.getElementById("btnPlus");
@@ -547,17 +575,22 @@
 
         //Operation functions
             //Single value operations
+            
                 //Square
                     btnSquare.addEventListener("click", () => {
                         let value = parseFloat(display.value);
                         let result = value*value;
-                        display.value=result;
+                        !isNaN(result) ?  display.value=result : null;
+                        //Take off Focus on Element
+                            undoFocus(btnSquare);
                     });
                 //Cube
                     btnCube.addEventListener("click", () => {
                         let value = parseFloat(display.value);
                         let result = value*value*value;
-                        display.value=result;
+                        !isNaN(result) ?  display.value=result : null;
+                        //Take off Focus on Element
+                            undoFocus(btnCube);
                     });
                 //Square root
                     btnSqRoot.addEventListener("click", () => {
@@ -570,7 +603,9 @@
                             }, 800);
                         } else {
                             display.value=result;
-                        }  
+                        }
+                        //Take off Focus on Element
+                            undoFocus(btnSqRoot);  
                     });
             
             //multiple value operations
@@ -589,12 +624,14 @@
                                 //remove last sign added at the end
                                     let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
                                     operationsDisplayValue = operationsDisplayValue.slice(0,-1);
-                                //add new display value to the already existent (eval() evaluates an expression in string format)
+                                //add new display value to the already existent (eval() evaluates an expression in string format), checking if value is not NaN
                                     operationsDisplay.innerHTML = `<p>${eval(operationsDisplayValue+operationsDisplayLastSign+(display.value))+signOperation}</p>`;
                                 //change display text position and value
                                     display.style = "padding: 2rem 1rem 0.5rem 1rem";
                                     display.value = "";
                             }
+                            //Take off Focus on Element
+                                undoFocus(btnOperation);
                         });
                     }
 
@@ -618,7 +655,14 @@
                         let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
                         operationsDisplayValue = operationsDisplayValue.slice(0,-1);
                     //add new display value to the already existent (eval() evaluates an expression in string format)
-                        display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+                        if (!(isNaN(eval(operationsDisplayValue+operationsDisplayLastSign+display.value)))) {
+                            display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+                        } else {
+                            display.value = "Entrada no válida."
+                            setTimeout(() => {
+                                display.value = "0";
+                            }, 800);
+                        }
                         operationsDisplay.innerHTML="";
                         display.style = "padding: 1rem";
                 });
