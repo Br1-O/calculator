@@ -167,6 +167,15 @@
             cursor: pointer;
         }
 
+        #displayContainer{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items:center;
+            width: 100%;
+            position: relative;
+        }
+
         #display{
             border-style: solid;
             border-color:rgb(127, 255, 212);
@@ -183,12 +192,21 @@
             caret-color: transparent;
 
             width: 70%;
-            height: 30%;
-            
+            height: 35%;
         }
 
         #display:focus{
             outline: none;
+        }
+
+        #secondaryDisplay{
+            text-align: right;
+            color: gray;
+            font-size: 1rem;
+            z-index: 10;
+            position: absolute;
+            top: 10px;
+            right: 100px;
         }
 
 
@@ -257,6 +275,76 @@
             cursor: pointer;
         }
 
+        /* mediaqueries */
+
+        @media screen and (min-width: 993px) {
+                #mainFrame {
+                    width: 30%; 
+                    height: 50%;
+                }
+
+                .btnNumber,
+                .btnOperation,
+                #btnEqual,
+                #btnReset,
+                #btnDelete {
+                    width: 4.5vw; /* Adjust button width relative to viewport width */
+                    font-size: 2vw; /* Adjust font size relative to viewport width */
+                }
+
+                #numberPane,
+                #operationPaneBottom {
+                    margin: 1rem 0;
+                }
+
+                #display {
+                    width: 70%;
+                    font-size: 2vw; /* Adjust font size relative to viewport width */
+                }
+
+                #displayContainer {
+                    width: 100%; 
+                }
+            }
+
+            @media screen and (max-width: 992px) {
+                #mainFrame {
+                    width: 90%; /* Adjust width for smaller screens */
+                }
+
+                .btnNumber,
+                .btnOperation,
+                #btnEqual,
+                #btnReset,
+                #btnDelete {
+                    width: 10vw; /* Adjust button width relative to viewport width */
+                    font-size: 4vw; /* Adjust font size relative to viewport width */
+                }
+
+                #numberPane,
+                #operationPaneBottom,
+                #operationsFrame {
+                    width: 100%; /* Make button grids occupy full width */
+                }
+
+                #numberPane,
+                #operationPaneBottom {
+                    margin: 1rem 0; /* Adjust margin for better spacing */
+                }
+
+                #equalFrame {
+                    padding: 0.5rem 2rem; /* Adjust padding for equal frame */
+                }
+
+                #display {
+                    width: 90%; /* Adjust display width for smaller screens */
+                    font-size: 4vw; /* Adjust font size relative to viewport width */
+                }
+
+                #displayContainer {
+                    width: 100%; /* Ensure display container occupies full width */
+                }
+            }
     </style>
 
 </head>
@@ -264,7 +352,11 @@
     <main>
         <div id="mainFrame">
 
-            <input id="display" type="text" value="0" autofocus></input>
+            <div id="displayContainer">
+                <div id="secondaryDisplay"></div>
+                <input id="display" type="text" value="0" autofocus></input>
+            </div>
+
 
             <div id="secondaryFrame">
                 
@@ -316,12 +408,14 @@
 
         //Display
             let display = document.getElementById("display");
+            let operationsDisplay = document.getElementById("secondaryDisplay");
             
         //Reset Btn
             let btnReset = document.getElementById("btnReset");
             btnReset.addEventListener("click", () => {
                     display.value= "0";
-                    console.log("successfully erased");
+                    operationsDisplay.innerHTML ="";
+                    display.style = "padding: 1rem";
                 });
 
         //Delete Btn
@@ -461,33 +555,74 @@
                     });
                 //Cube
                     btnCube.addEventListener("click", () => {
-                            let value = parseFloat(display.value);
-                            let result = value*value*value;
-                            display.value=result;
-                        });
+                        let value = parseFloat(display.value);
+                        let result = value*value*value;
+                        display.value=result;
+                    });
                 //Square root
                     btnSqRoot.addEventListener("click", () => {
                         let value = parseFloat(display.value);
                         let result = Math.sqrt(value);
-                        console.log(isNaN(result));
-                        isNaN(result) ? display.value = "Entrada no válida" : display.value=result;
-                        setTimeout(() => {
-                            display.value = "0";
-                        }, 800);
+                        if (isNaN(result)) {
+                            display.value = "Entrada no válida"; 
+                            setTimeout(() => {
+                                display.value = "0";
+                            }, 800);
+                        } else {
+                            display.value=result;
+                        }  
                     });
             
             //multiple value operations
+                //Operations function
+                    let doOperation = (btnOperation, signOperation) => {
+                        btnOperation.addEventListener("click", () => {
+                        //check if a sum was already made before clicking "="
+                            if (operationsDisplay.innerHTML == "") {
+                                display.value += signOperation;
+                                operationsDisplay.innerHTML = `<p>${display.value}</p>`;
+                                display.style = "padding: 2rem 1rem 0.5rem 1rem";
+                                display.value = "";
+                            } else {
+                                // Get the value inside the <p> tag of operationsDisplay
+                                    let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+                                //remove last sign added at the end
+                                    let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
+                                    operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                                //add new display value to the already existent (eval() evaluates an expression in string format)
+                                    operationsDisplay.innerHTML = `<p>${eval(operationsDisplayValue+operationsDisplayLastSign+(display.value))+signOperation}</p>`;
+                                //change display text position and value
+                                    display.style = "padding: 2rem 1rem 0.5rem 1rem";
+                                    display.value = "";
+                            }
+                        });
+                    }
+
                 //Adding function
-                    btnAdd.addEventListener("click", () => {
-                        let value1 = display.value;
-                        display.value += "+";
+                    doOperation(btnAdd, "+");
+                    
+                //Minus function
+                    doOperation(btnMinus, "-");
 
+                //Multiplication function
+                    doOperation(btnMult, "*");
 
-                    })
+                //Division function
+                    doOperation(btnDiv, "/");
             
+            //Equal function
+                btnEqual.addEventListener("click", () => {
+                    // Get the value inside the <p> tag of operationsDisplay
+                        let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+                    //remove last sign added at the end
+                        let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
+                        operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                    //add new display value to the already existent (eval() evaluates an expression in string format)
+                        display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+                        operationsDisplay.innerHTML="";
+                        display.style = "padding: 1rem";
+                });
             
-
-
     </script>
 
 </body>
