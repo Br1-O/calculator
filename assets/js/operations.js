@@ -1,3 +1,5 @@
+import { saveIntoSessionStorage } from "./sessionStorage.js";
+
 //Display
     export let display = document.getElementById("display");
     let operationsDisplay = document.getElementById("secondaryDisplay");
@@ -145,7 +147,11 @@
             btnSquare.addEventListener("click", () => {
                 let value = parseFloat(display.value);
                 let result = value*value;
-                !isNaN(result) ?  display.value=result : null;
+                if (!isNaN(result)) {
+                    saveIntoSessionStorage(display.value+"²"+"="+result);
+                    display.value=result;
+                    console.log(sessionStorage.getItem(history));
+                }
                 //Take off Focus on Element
                     undoFocus(btnSquare);
             });
@@ -153,7 +159,10 @@
             btnCube.addEventListener("click", () => {
                 let value = parseFloat(display.value);
                 let result = value*value*value;
-                !isNaN(result) ?  display.value=result : null;
+                if (!isNaN(result)) {
+                    saveIntoSessionStorage(display.value+"³"+"="+result);
+                    display.value=result;
+                }
                 //Take off Focus on Element
                     undoFocus(btnCube);
             });
@@ -167,6 +176,7 @@
                         display.value = "0";
                     }, 800);
                 } else {
+                    saveIntoSessionStorage("√"+display.value+"="+result);
                     display.value=result;
                 }
                 //Take off Focus on Element
@@ -191,6 +201,8 @@
                             operationsDisplayValue = operationsDisplayValue.slice(0,-1);
                         //add new display value to the already existent (eval() evaluates an expression in string format), checking if value is not NaN
                             operationsDisplay.innerHTML = `<p>${eval(operationsDisplayValue+operationsDisplayLastSign+(display.value))+signOperation}</p>`;
+                        //save into sessionStorage for calculations history
+                            saveIntoSessionStorage(operationsDisplayValue+operationsDisplayLastSign+(display.value)+"="+eval(operationsDisplayValue+operationsDisplayLastSign+(display.value)));
                         //change display text position and value
                             display.style = "padding: 2rem 1rem 0.5rem 1rem";
                             display.value = "";
@@ -230,6 +242,8 @@
                         let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
                     //remove last sign added at the end
                         operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                    //save into sessionStorage for calculation history
+                        saveIntoSessionStorage(operationsDisplayValue+"%"+display.value+"="+((display.value/operationsDisplayValue)*100));
                     //change display value
                         operationsDisplay.innerHTML = `<p>${((display.value/operationsDisplayValue)*100)+"%"}</p>`;
                         display.value = "";
@@ -248,6 +262,8 @@
                     let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
                     //remove last sign added at the end
                         operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                    //save into sessionStorage for calculation history
+                        saveIntoSessionStorage(operationsDisplayValue+"%"+display.value+"="+((display.value/operationsDisplayValue)*100));
                     //change display value
                         operationsDisplay.innerHTML = "";
                         display.style = "padding: 1rem";
@@ -260,7 +276,10 @@
                     operationsDisplayValue = operationsDisplayValue.slice(0,-1);
                 //add new display value to the already existent (eval() evaluates an expression in string format)
                     if (!(isNaN(eval(operationsDisplayValue+operationsDisplayLastSign+display.value)))) {
-                        display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+                        //save into sessionStorage for calculation history
+                            saveIntoSessionStorage(operationsDisplayValue+operationsDisplayLastSign+display.value+"="+eval(operationsDisplayValue+operationsDisplayLastSign+display.value));
+                        //change display value
+                            display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
                     } else {
                         display.value = "Entrada no válida."
                         setTimeout(() => {
