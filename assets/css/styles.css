@@ -366,7 +366,7 @@ main{
             }
 
             #display {
-                width: 90%; /* Adjust display width for smaller screens */
+                width: 85%; /* Adjust display width for smaller screens */
                 font-size: 4vw; /* Adjust font size relative to viewport width */
                 margin: 0rem 0.2rem 0rem 1rem ;
             }
