@@ -371,6 +371,12 @@ main{
                 margin: 0rem 0.2rem 0rem 1rem ;
             }
 
+            #secondaryDisplay{
+                top: -5px;
+                right: 50px;
+            }
+            
+
             #displayContainer {
                 width: 100%; /* Ensure display container occupies full width */
             }
@@ -436,6 +442,11 @@ main{
                 width: 90%; /* Adjust display width for smaller screens */
                 font-size: 4vw; /* Adjust font size relative to viewport width */
                 margin-left: 1rem;
+            }
+            
+            #secondaryDisplay{
+                top: 8px;
+                right: 50px;
             }
 
             #displayContainer {
