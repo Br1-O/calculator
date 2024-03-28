@@ -368,7 +368,7 @@ main{
             #display {
                 width: 90%; /* Adjust display width for smaller screens */
                 font-size: 4vw; /* Adjust font size relative to viewport width */
-                margin-left: 1rem;
+                margin: 0rem 0.2rem 0rem 1rem ;
             }
 
             #displayContainer {
@@ -377,6 +377,7 @@ main{
 
             #btnHistory{
                 margin-right: 0vh;
+                font-size: 4vh;
             }
         }
 
