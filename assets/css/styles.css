@@ -1,0 +1,338 @@
+body{
+    background-image: url("../images/trigonometria_formulas.png");
+    background-repeat: no-repeat;
+    background-position-y:20%;
+    background-size:cover;
+}
+
+#mainFrame{
+    border-style: solid;
+    border-color: rgba(127, 255, 212,0.8);
+    border-width: 5px;
+    border-radius: 15px;
+    width: 30%;
+    height: 50%;
+    background-color: aliceblue;
+    padding: 10px;
+    margin: 5% 10%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#secondaryFrame{
+
+    background-color:rgba(165, 195, 240, 0.193);
+    border-radius: 15px;
+    margin:1rem 0px;
+
+    display: flex;
+    flex-direction: row;
+    padding: 2rem;
+
+    justify-content:center;
+    align-items:baseline;
+    width: 75%;
+}
+
+#lefFrame{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#numberPane{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    grid-gap: 5%;
+
+}
+
+.btnNumber{
+    border-style: solid;
+    border-color:rgb(127, 255, 212);;
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color: rgba(106, 251, 202, 0.9);;
+    color: white;
+    font-weight: 700;
+    padding: 5px;
+    text-align: center;
+
+    width: 5rem;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+.btnNumber:hover{
+    background-color: rgb(46, 220, 162);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btnNumber:focus{
+    box-shadow: 0px 0px 0px gray;
+    background-color: rgb(46, 220, 162);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#operationPaneRight{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#operationsFrame{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#equalFrame{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.9rem 2rem 1rem;
+
+}
+
+#operationPaneBottom{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(2,1fr);
+    justify-content: center;
+    align-items: center;
+    grid-gap: 0.5rem;
+}
+
+
+.btnOperation{
+    border-style: solid;
+    border-color:rgba(103, 19, 250,0.8);
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color: rgba(103, 19, 250, 0.7);
+    color: white;
+    font-weight: 700;
+    padding: 5px;
+    text-align: center;
+
+    width: 5rem;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+.btnOperation:hover{
+    background-color: rgb(103, 19, 250);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btnOperation:focus{
+    box-shadow: 0px 0px 0px gray;
+    background-color: rgb(103, 19, 250);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#displayContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+    position: relative;
+}
+
+#display{
+    border-style: solid;
+    border-color:rgb(127, 255, 212);
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color:white;
+    color:black;
+    font-weight: 700;
+    margin: 1rem 0.5rem;
+    padding: 1rem;
+    text-align: right;
+
+    caret-color: transparent;
+
+    width: 70%;
+    height: 35%;
+}
+
+#display:focus{
+    outline: none;
+}
+
+#secondaryDisplay{
+    text-align: right;
+    color: gray;
+    font-size: 1rem;
+    z-index: 10;
+    position: absolute;
+    top: 10px;
+    right: 100px;
+}
+
+
+#btnReset{
+    border-style: solid;
+    border-color:cadetblue;
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color: rgba(248, 15, 7,0.9);
+    color: white;
+    font-weight: 700;
+    padding: 5px;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+#btnReset:hover{
+    background-color: rgb(228, 30, 23);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#btnDelete{
+    border-style: solid;
+    border-color:cadetblue;
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color: rgba(248, 15, 7,0.9);
+    color: white;            
+    padding: 3px 0px;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+#btnDelete:hover{
+    background-color: rgb(228, 30, 23);
+    color: white;
+    cursor: pointer;
+}
+
+#btnEqual{
+    border-style: solid;
+    border-color:rgba(31, 31, 217, 0.339);
+    border-width: 2px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background-color: rgba(31, 31, 217, 0.7);
+    color: white;
+    font-weight: 700;
+    padding: 5px;
+    text-align: center;
+
+    width: 5rem;
+    height: 7rem;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+#btnEqual:hover{
+    background-color:rgba(31, 31, 217, 0.9);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* mediaqueries */
+
+@media screen and (min-width: 993px) {
+        #mainFrame {
+            width: 30%; 
+            height: 50%;
+        }
+
+        .btnNumber,
+        .btnOperation,
+        #btnEqual,
+        #btnReset,
+        #btnDelete {
+            width: 4.5vw; /* Adjust button width relative to viewport width */
+            font-size: 2vw; /* Adjust font size relative to viewport width */
+        }
+
+        #numberPane,
+        #operationPaneBottom {
+            margin: 1rem 0;
+        }
+
+        #display {
+            width: 70%;
+            font-size: 2vw; /* Adjust font size relative to viewport width */
+        }
+
+        #displayContainer {
+            width: 100%; 
+        }
+
+        #btnEqual {
+            height: 6.4vw;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        #mainFrame {
+            width: 90%; /* Adjust width for smaller screens */
+        }
+
+        .btnNumber,
+        .btnOperation,
+        #btnEqual,
+        #btnReset,
+        #btnDelete {
+            width: 10vw; /* Adjust button width relative to viewport width */
+            font-size: 4vw; /* Adjust font size relative to viewport width */
+        }
+
+        #numberPane,
+        #operationPaneBottom,
+        #operationsFrame {
+            width: 100%; /* Make button grids occupy full width */
+        }
+
+        #numberPane,
+        #operationPaneBottom {
+            margin: 1rem 0; /* Adjust margin for better spacing */
+        }
+
+        #equalFrame {
+            padding: 0.5rem 2rem; /* Adjust padding for equal frame */
+        }
+
+        #display {
+            width: 90%; /* Adjust display width for smaller screens */
+            font-size: 4vw; /* Adjust font size relative to viewport width */
+        }
+
+        #displayContainer {
+            width: 100%; /* Ensure display container occupies full width */
+        }
+    }
