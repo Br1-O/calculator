@@ -21,19 +21,34 @@
 //Delete Btn
     let btnDelete = document.getElementById("btnDelete");
     btnDelete.addEventListener("click", () => {
-        //get display value
-            let displayOriginalValue = display.value;
-        //create substring with last char deleted 
-            let valueWLastCharDeleted = displayOriginalValue.substr(0, displayOriginalValue.length-1);
-        //check if all digits where deleted
-        if (valueWLastCharDeleted.length!==0) {
-            //update display value
-            display.value = valueWLastCharDeleted;
-        } else {
-            //update display value to zero is no digit remains
-            display.value = 0;
-        }
+        //check if there is a pending operation
+            //if not, erase display's last number
+            if (operationsDisplay.innerHTML == "") {
+                //get display value
+                    let displayOriginalValue = display.value;
+                //create substring with last char deleted 
+                    let valueWLastCharDeleted = displayOriginalValue.substr(0, displayOriginalValue.length-1);
+                //check if all digits where deleted
+                if (valueWLastCharDeleted.length!==0) {
+                    //update display value
+                    display.value = valueWLastCharDeleted;
+                } else {
+                    //update display value to zero is no digit remains
+                    display.value = 0;
+                }
+            //if there is a pending operation, cancel that operation
+            } else {
+                // Get the value inside the <p> tag of operationsDisplay
+                    let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+                //remove last sign added at the end
+                    // let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
+                    operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                //erase operationsDisplay value and change display value
+                    operationsDisplay.innerHTML = "";
+                    display.style = "padding: 1rem";
+                    display.value= operationsDisplayValue;
 
+            }
     });
 
 //Change Sign Btn
@@ -196,24 +211,64 @@
 
         //Division function
             doOperation(btnDiv, "/");
+
+        //Percent function
+            btnPercent.addEventListener("click", () => {
+            //check if there is an operation made before
+                if (operationsDisplay.innerHTML == "") {
+                    display.value += "%";
+                    operationsDisplay.innerHTML = `<p>${display.value}</p>`;
+                    display.style = "padding: 2rem 1rem 0.5rem 1rem";
+                    display.value = "";
+
+                }else if(operationsDisplay.innerHTML !== "" && ["+","-","*","/"].includes((operationsDisplay.querySelector('p').textContent).charAt((operationsDisplay.querySelector('p').textContent).length-1))){
+                    //Take off Focus on Element
+                        undoFocus(btnPercent);
+                    return null;
+                } else {
+                    // Get the value inside the <p> tag of operationsDisplay
+                        let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+                    //remove last sign added at the end
+                        operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                    //change display value
+                        operationsDisplay.innerHTML = `<p>${((display.value/operationsDisplayValue)*100)+"%"}</p>`;
+                        display.value = "";
+                }
+                //Take off Focus on Element
+                    undoFocus(btnPercent);
+            });
     
     //Equal function
         btnEqual.addEventListener("click", () => {
             // Get the value inside the <p> tag of operationsDisplay
                 let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
-            //remove last sign added at the end
-                let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
-                operationsDisplayValue = operationsDisplayValue.slice(0,-1);
-            //add new display value to the already existent (eval() evaluates an expression in string format)
-                if (!(isNaN(eval(operationsDisplayValue+operationsDisplayLastSign+display.value)))) {
-                    display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+            //check if % is the operation
+                if (operationsDisplayValue.includes("%")) {
+                    // Get the value inside the <p> tag of operationsDisplay
+                    let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+                    //remove last sign added at the end
+                        operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                    //change display value
+                        operationsDisplay.innerHTML = "";
+                        display.style = "padding: 1rem";
+                        display.value = (display.value/operationsDisplayValue)*100;
+                    //Take off Focus on Element
+                        undoFocus(btnPercent);
                 } else {
-                    display.value = "Entrada no válida."
-                    setTimeout(() => {
-                        display.value = "0";
-                    }, 800);
+                //remove last sign added at the end
+                    let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
+                    operationsDisplayValue = operationsDisplayValue.slice(0,-1);
+                //add new display value to the already existent (eval() evaluates an expression in string format)
+                    if (!(isNaN(eval(operationsDisplayValue+operationsDisplayLastSign+display.value)))) {
+                        display.value = eval(operationsDisplayValue+operationsDisplayLastSign+display.value);
+                    } else {
+                        display.value = "Entrada no válida."
+                        setTimeout(() => {
+                            display.value = "0";
+                        }, 800);
+                    }
+                    operationsDisplay.innerHTML="";
+                    display.style = "padding: 1rem";
                 }
-                operationsDisplay.innerHTML="";
-                display.style = "padding: 1rem";
         });
     
