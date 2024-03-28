@@ -64,12 +64,13 @@ main{
     width: 75%;
 }
 
-#lefFrame{
+#leftFrame{
     display: flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
     gap: 1rem;
+    padding-left: 1.5rem;
 }
 
 #numberPane{
@@ -95,7 +96,7 @@ main{
     padding: 5px;
     text-align: center;
 
-    width: 5rem;
+    width: 12vh;
 
     box-shadow: 5px 2px 0px gray;
 }
@@ -237,6 +238,8 @@ main{
     background-color: rgba(106, 251, 202, 0.9);
     border-radius: 50%;
     padding: 0rem 0.8rem;
+    min-width: 2vh;
+    max-height: 8vh;
     cursor: pointer;
     text-align: center;
     margin-right: -5vh;
@@ -309,86 +312,171 @@ main{
 
 /* mediaqueries */
 
-@media screen and (min-width: 993px) {
-        #mainFrame {
-            width: 30%; 
-            height: 50%;
+    /*cellphones*/
+        @media screen and (max-width: 768px) {
+            #mainFrame {
+                width: 90%; /* Adjust width for smaller screens */
+            }
+
+            main{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .btnNumber,
+            .btnOperation,
+            #btnEqual,
+            #btnReset,
+            #btnDelete {
+                width: 15vw; /* Adjust button width relative to viewport width */
+                min-height: 5vh;
+                min-width: 4vh;
+                max-width: 10vh;
+                font-size: 4vw; /* Adjust font size relative to viewport width */
+            }
+
+            .btnNumber{
+                margin-top: 0.5vh;
+            }
+
+            #btnEqual{
+                min-height: 10vh;
+                max-height: 12vh;
+            }
+
+            #numberPane,
+            #operationPaneBottom,
+            #operationsFrame {
+                width: 100%; /* Make button grids occupy full width */
+            }
+
+            #leftFrame{
+                gap:0.2rem;
+            }
+
+            #numberPane,
+            #operationPaneBottom {
+                margin: 1rem 0; /* Adjust margin for better spacing */
+            }
+
+            #equalFrame {
+                padding: 0.5rem 2rem; /* Adjust padding for equal frame */
+            }
+
+            #display {
+                width: 90%; /* Adjust display width for smaller screens */
+                font-size: 4vw; /* Adjust font size relative to viewport width */
+                margin-left: 1rem;
+            }
+
+            #displayContainer {
+                width: 100%; /* Ensure display container occupies full width */
+            }
+
+            #btnHistory{
+                margin-right: 0vh;
+            }
         }
 
-        .btnNumber,
-        .btnOperation,
-        #btnEqual,
-        #btnReset,
-        #btnDelete {
-            width: 4.5vw; /* Adjust button width relative to viewport width */
-            font-size: 2vw; /* Adjust font size relative to viewport width */
+    /*medium screens*/
+        @media screen and (min-width: 768px ) and (max-width: 992px) {
+            #mainFrame {
+                width: 90%; /* Adjust width for smaller screens */
+            }
+
+            main{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .btnNumber,
+            .btnOperation,
+            #btnEqual,
+            #btnReset,
+            #btnDelete {
+                width: 15vw; /* Adjust button width relative to viewport width */
+                min-height: 4vh;
+                max-width: 12vh;
+                font-size: 4vw; /* Adjust font size relative to viewport width */
+            }
+
+            .btnNumber{
+                margin-top: 0.5vh;
+            }
+
+            #btnEqual{
+                min-height: 19vh;
+            }
+
+            #numberPane,
+            #operationPaneBottom,
+            #operationsFrame {
+                width: 100%; /* Make button grids occupy full width */
+            }
+
+            #numberPane,
+            #operationPaneBottom {
+                margin: 1rem 0; /* Adjust margin for better spacing */
+            }
+
+            #leftFrame{
+                gap: 0.1rem;
+            }
+
+            #equalFrame {
+                padding: 0.5rem 2rem; /* Adjust padding for equal frame */
+            }
+
+            #display {
+                width: 90%; /* Adjust display width for smaller screens */
+                font-size: 4vw; /* Adjust font size relative to viewport width */
+                margin-left: 1rem;
+            }
+
+            #displayContainer {
+                width: 100%; /* Ensure display container occupies full width */
+            }
+
+            #btnHistory{
+                margin-right: 0vh;
+            }
         }
 
-        #numberPane,
-        #operationPaneBottom {
-            margin: 1rem 0;
-        }
+    /*large screens*/        
+        @media screen and (min-width: 993px) {
+            #mainFrame {
+                width: 30%; 
+                height: 50%;
+            }
 
-        #display {
-            width: 70%;
-            font-size: 2vw; /* Adjust font size relative to viewport width */
-        }
+            .btnNumber,
+            .btnOperation,
+            #btnEqual,
+            #btnReset,
+            #btnDelete {
+                width: 4.5vw; /* Adjust button width relative to viewport width */
+                font-size: 2vw; /* Adjust font size relative to viewport width */
+            }
 
-        #displayContainer {
-            width: 100%; 
-        }
+            #numberPane,
+            #operationPaneBottom {
+                margin: 1rem 0;
+            }
 
-        #btnEqual {
-            height: 6.4vw;
-        }
-    }
+            #display {
+                width: 70%;
+                font-size: 2vw; /* Adjust font size relative to viewport width */
+            }
 
-    @media screen and (max-width: 992px) {
-        #mainFrame {
-            width: 90%; /* Adjust width for smaller screens */
-        }
+            #displayContainer {
+                width: 100%; 
+            }
 
-        main{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            #btnEqual {
+                height: 6.4vw;
+            }
         }
-
-        .btnNumber,
-        .btnOperation,
-        #btnEqual,
-        #btnReset,
-        #btnDelete {
-            width: 10vw; /* Adjust button width relative to viewport width */
-            font-size: 4vw; /* Adjust font size relative to viewport width */
-        }
-
-        #numberPane,
-        #operationPaneBottom,
-        #operationsFrame {
-            width: 100%; /* Make button grids occupy full width */
-        }
-
-        #numberPane,
-        #operationPaneBottom {
-            margin: 1rem 0; /* Adjust margin for better spacing */
-        }
-
-        #equalFrame {
-            padding: 0.5rem 2rem; /* Adjust padding for equal frame */
-        }
-
-        #display {
-            width: 90%; /* Adjust display width for smaller screens */
-            font-size: 4vw; /* Adjust font size relative to viewport width */
-        }
-
-        #displayContainer {
-            width: 100%; /* Ensure display container occupies full width */
-        }
-
-        #btnHistory{
-            margin-right: 0vh;
-        }
-    }

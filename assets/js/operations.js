@@ -150,7 +150,6 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
                 if (!isNaN(result)) {
                     saveIntoSessionStorage(display.value+"²"+"="+result);
                     display.value=result;
-                    console.log(sessionStorage.getItem(history));
                 }
                 //Take off Focus on Element
                     undoFocus(btnSquare);

@@ -25,7 +25,7 @@
 
             <div id="secondaryFrame">
                 
-                <div id="lefFrame">
+                <div id="leftFrame">
                     <div id="numberPane">
                         <button class="btnNumber" id="btn9"> 9 </button>
                         <button class="btnNumber" id="btn8"> 8 </button>
@@ -72,6 +72,10 @@
         
     </main>
 
+    <script> 
+        //Create sessionStorage array for operations history
+            sessionStorage.setItem(history, "[]");
+    </script>
     <script type="module" src="./assets/js/numbers.js"></script>
     <script type="module" src="./assets/js/operations.js"></script>
     <script type="module" src="./assets/js/sessionStorage.js"></script>

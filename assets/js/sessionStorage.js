@@ -1,6 +1,3 @@
-//Create sessionStorage array for operations history
-    sessionStorage.setItem(history, "[]");
-
 //Function to save operations into session storage
     export let saveIntoSessionStorage = (operation) => {
 
