@@ -351,7 +351,7 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
 
 
 //Event Listener for keyboard
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', (event) => {
         // Check if the pressed key is a number/operation key
             if (/^[+\-*/.=\d]+$/.test(event.key)) {
 
@@ -362,17 +362,34 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
                 // Focus display
                 display.focus();
                 // Put cursor at the end of values
-                display.setSelectionRange(this.value.length, this.value.length);
+                display.setSelectionRange((display.value).length, (display.value).length);
 
-            } else if (event.key === "Backspace") {
-                event.preventDefault();
-                //trigger event for btnDelete when backspace is pressed 
-                btnDelete.click();
+            }else if(event.key === "Backspace"){
+
+                //avoid backspace key to be able to erase base zero on display
+                if ((display.value).length === 1) {
+                    if (display.value !== "0") {
+                        event.preventDefault();
+                        display.value = "0";
+                    }else{
+                        event.preventDefault();
+                    }
+                }
             } else if(event.key === "Enter"){
                 //trigger event for btnEqual when either Enter key is pressed
                 btnEqual.click();
             }
     });
 
-    
-        
+//Event Listener for paste event
+    display.addEventListener('paste', (event) => {
+
+        //Erase initial zero value
+        if (display.value === "0") {
+            display.value = "";
+        }
+
+        // Focus display
+        display.focus();
+
+    });  
