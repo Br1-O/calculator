@@ -253,9 +253,16 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
     
     //Equal function
         btnEqual.addEventListener("click", () => {
-            // Get the value inside the <p> tag of operationsDisplay
-                let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
-            //check if % is the operation
+
+            let operationsDisplayValue;
+
+            //check if there is a previous operation done
+            if (operationsDisplay.innerHTML !== "") {
+
+                // Get the value inside the <p> tag of operationsDisplay
+                operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
+
+                //check if % is the operation
                 if (operationsDisplayValue.includes("%")) {
                     // Get the value inside the <p> tag of operationsDisplay
                     let operationsDisplayValue = operationsDisplay.querySelector('p').textContent;
@@ -269,7 +276,7 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
                         display.value = (display.value/operationsDisplayValue)*100;
                     //Take off Focus on Element
                         undoFocus(btnPercent);
-                } else {
+                } else if(operationsDisplayValue !== "" && !(operationsDisplayValue.includes("%"))) {
                 //remove last sign added at the end
                     let operationsDisplayLastSign = operationsDisplayValue.charAt(operationsDisplayValue.length-1);
                     operationsDisplayValue = operationsDisplayValue.slice(0,-1);
@@ -288,5 +295,84 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
                     operationsDisplay.innerHTML="";
                     display.style = "padding: 1rem";
                 }
+
+            } else {
+                // Check if there is an expression in display to evaluate
+                if (display.value !== "") {
+
+                    //I created a new String, since strings are immutable in Js
+                    let correctedDisplayValue = "";
+
+                    //replace power signs for their operational equivalent, so when copying operations from history pane they can be re used
+                    for (let i = 0; i < (display.value).length; i++) {
+
+                        if (display.value[i] == "²") {
+                            correctedDisplayValue += "**2";
+                        } else if (display.value[i] == "³"){
+                            correctedDisplayValue += "**3";
+                        } else if (display.value[i] == "√"){
+
+                            //add the next character after the sign before, so "**(1/2)"" can be add at the end
+                            correctedDisplayValue += display.value[i+1];
+
+                            //use flag variable to add counter to i at the end of second for loop, so its value is not affected during the second loop
+                            let addToI=1;
+
+                            //check if the next character is also a number, if so, add it at after the last number but before the sign
+                            for (let index = 2; index-2 < ((display.value).substr(i+2, ((display.value).length)-(i+1)).length); index++) {
+                        
+                                if (!isNaN(display.value[i+index])) {
+                                    correctedDisplayValue += display.value[i+index];
+                                    ++addToI;
+                                } else {
+                                    break;
+                                }
+                            }
+                            
+                            correctedDisplayValue += "**(1/2)";
+                            i+=addToI;
+                        }else{
+                            correctedDisplayValue += display.value[i];
+                        }
+                    }
+                    //if the calculation is invalid, it will don't perfom it. Otherwise, it will proceed as usual.
+                    if (isNaN(eval(correctedDisplayValue))) {
+                        return;
+                    } else {
+                        //save into sessionStorage for calculation history
+                        saveIntoSessionStorage(display.value + "=" + eval(correctedDisplayValue));
+                        //show result into display
+                        display.value = eval(correctedDisplayValue);
+                    }
+                }
+            }
+
         });
+
+
+//Event Listener for keyboard
+    document.addEventListener('keydown', function(event) {
+        // Check if the pressed key is a number/operation key
+            if (/^[+\-*/.=\d]+$/.test(event.key)) {
+
+                //Erase initial zero value
+                if (display.value === "0") {
+                    display.value = "";
+                }
+                // Focus display
+                display.focus();
+                // Put cursor at the end of values
+                display.setSelectionRange(this.value.length, this.value.length);
+
+            } else if (event.key === "Backspace") {
+                event.preventDefault();
+                //trigger event for btnDelete when backspace is pressed 
+                btnDelete.click();
+            } else if(event.key === "Enter"){
+                //trigger event for btnEqual when either Enter key is pressed
+                btnEqual.click();
+            }
+    });
+
     
+        
