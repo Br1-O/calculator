@@ -49,6 +49,12 @@ main{
     display: none;
 }
 
+#historyPane div, article{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
 #secondaryFrame{
 
     background-color:rgba(165, 195, 240, 0.193);
@@ -381,6 +387,10 @@ main{
                 width: 100%; /* Ensure display container occupies full width */
             }
 
+            #historyPane{
+                min-width: 40vh;
+            }
+
             #btnHistory{
                 margin-right: 0vh;
                 font-size: 4vh;
@@ -451,6 +461,10 @@ main{
 
             #displayContainer {
                 width: 100%; /* Ensure display container occupies full width */
+            }
+            
+            #historyPane{
+                min-width: 50vh;
             }
 
             #btnHistory{
