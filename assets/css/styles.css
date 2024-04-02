@@ -238,17 +238,26 @@ main{
 }
 
 #btnHistory{
-    font-size: 3rem;
+    font-size: 2rem;
     z-index: 10;
-    color: aliceblue;
-    background-color: rgba(106, 251, 202, 0.9);
+    background-color: aliceblue;
     border-radius: 50%;
-    padding: 0rem 0.8rem;
+    padding: 0.3rem 0.3rem;
     min-width: 2vh;
-    max-height: 8vh;
+    max-height: 5vh;
     cursor: pointer;
     text-align: center;
     margin-right: -5vh;
+
+    box-shadow: 5px 2px 0px gray;
+}
+
+#btnHistory:hover{
+    background-color: rgb(255, 255, 255);
+}
+
+#btnHistory:active{
+    box-shadow: 0px 0px 0px gray;
 }
 
 #btnReset{
@@ -393,7 +402,6 @@ main{
 
             #btnHistory{
                 margin-right: 0vh;
-                font-size: 4vh;
             }
         }
 

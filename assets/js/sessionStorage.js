@@ -19,7 +19,7 @@
         //retrieve history array from sessionStorage
         let historyValues = JSON.parse(sessionStorage.getItem(history));
         let historyInfo =`<div>
-                          <img src="./assets/images/copy.png" id="btnCopyAll" style="height: 2rem; margin-right: 0.5rem;" alt="copy icon" title="Copiar historial"></img>
+                          <img src="./assets/images/copy.png" id="btnCopyAll" style="height: 2rem; margin-right: 0.5rem; cursor: pointer;" alt="copy icon" title="Copiar historial"></img>
                           <h3> Operaciones realizadas: </h3>
                           </div>`;
 
@@ -28,13 +28,13 @@
         //iterate history array values
         for (const operation of historyValues) {
             historyInfo += `<article>
-                            <img src="./assets/images/copy.png" class="btnCopy" id="btnCopy${idCounter}" style="height: 1.5rem; margin-right: 0.2rem;" title="Copiar operacion" alt="copy icon"></img>
+                            <img src="./assets/images/copy.png" class="btnCopy" id="btnCopy${idCounter}" style="height: 1.5rem; margin-right: 0.2rem; cursor: pointer;" title="Copiar operacion" alt="copy icon"></img>
                             <p id="result${idCounter}">${operation}</p>
                             </article>`;
                 
             ++idCounter;
         }
-        
+
         //Place array values in history Pane
         historyPane.innerHTML = historyInfo;
 
