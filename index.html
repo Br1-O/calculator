@@ -73,8 +73,10 @@
     </main>
 
     <script> 
-        //Create sessionStorage array for operations history
-            sessionStorage.setItem(history, "[]");
+        window.addEventListener("load", () => {
+            //On load of file create sessionStorage array for operations history
+            sessionStorage.setItem("history", JSON.stringify([]));
+        })
     </script>
     <script type="module" src="./assets/js/numbers.js"></script>
     <script type="module" src="./assets/js/operations.js"></script>

@@ -1,3 +1,7 @@
+html{
+    height: 100%;
+}
+
 body{
     background-image: url("../images/trigonometria_formulas.png");
     background-repeat: no-repeat;
@@ -47,13 +51,32 @@ main{
     overflow-y:auto;
     
     display: none;
+    box-sizing:border-box;
 }
 
 #historyPane div, article{
     display: flex;
     justify-content: left;
     align-items: center;
+    padding: 0px 2px;
 }
+
+#historyPane [id^="result"]{
+    color: rgb(83, 85, 85);
+}
+
+#historyPane article:hover [id^="result"]{
+    color: black;
+}
+
+#historyPane article:hover{
+    background-color: rgba(127, 255, 212,0.1);
+    box-shadow: 0px 0px 5px rgba(127, 255, 212,0.8);
+    border-radius: 5px;
+    padding: 2px;
+    box-sizing:border-box;
+}
+
 
 #secondaryFrame{
 

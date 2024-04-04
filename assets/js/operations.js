@@ -91,7 +91,6 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
             undoFocus(btnChangeSign);
     });
 
-
 //Restriction to only number characters function for display
     display.addEventListener("keydown", () => {
         //get original display value
@@ -110,8 +109,6 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
             }
     });
 
-
-
 //Input Function for dot button
     btnDot.addEventListener("click", () => {
         //check if there is not already 1 dot in display value
@@ -125,7 +122,6 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
         //Take off Focus on Element
             undoFocus(btnDot);
     });
-
 
 //Operation Btns
     let btnAdd = document.getElementById("btnPlus");
@@ -297,8 +293,8 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
                 }
 
             } else {
-                // Check if there is an expression in display to evaluate
-                if (display.value !== "") {
+                // Check if there is an expression in display that contains an operation
+                if (display.value !== "" && /[+\-*/%²³√]/.test(display.value)) {
 
                     //I created a new String, since strings are immutable in Js
                     let correctedDisplayValue = "";
@@ -391,5 +387,4 @@ import { saveIntoSessionStorage } from "./sessionStorage.js";
 
         // Focus display
         display.focus();
-
     });  
