@@ -4,8 +4,17 @@
 //Function for displaying sessionStorage data into historyPane
     let displayData = () => {
 
-        //retrieve history array from sessionStorage
-        let historyValues = JSON.parse(sessionStorage.getItem("history"));
+        let historyValues;
+        
+        // Check if the sessionStorage data exists
+            if (sessionStorage.getItem("history") !== null) {
+                //retrieve history array from sessionStorage
+                historyValues = JSON.parse(sessionStorage.getItem("history"));
+            } else {
+                // Initialize history array if it doesn't exist
+                historyValues = [];
+            }
+
         let historyInfo =`<div>
                             <img src="./assets/images/copy.png" id="btnCopyAll" style="height: 2rem; margin-right: 0.5rem; cursor: pointer;" alt="copy icon" title="Copiar historial"></img>
                             <h3> Operaciones realizadas: </h3>
